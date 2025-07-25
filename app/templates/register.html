@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block content %}
+    <h1>Регистрация</h1>
+{% for field, errors in form.errors.items() %}
+  {% for error in errors %}
+    <div style="color: red;">
+        Ошибка в поле "{{ field }}": {{ error }}
+    </div>
+  {% endfor %}
+{% endfor %}
+
+    <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+        </div>
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </div>
+        <div>
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=64) }}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+{% endblock %}
